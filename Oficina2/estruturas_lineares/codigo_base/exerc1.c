@@ -83,9 +83,9 @@ void criarTarefa(PilhaEmergencia* p, FilaPeriodica* f, ListaBackground* l){
     int local;
     printf("Onde Inserir: ");
     scanf("%d", &local);
-    if(local == 1) push_emergency(p, tarefa);
-    else if(local == 2) enqueue_periodic(f, tarefa);
-    else insert_background(l, tarefa);
+    if(local == 1) empilharEmergencia(p, tarefa);
+    else if(local == 2) enfileirarPeriodica(f, tarefa);
+    else inserirBackground(l, tarefa);
 }
 
 int main(){
