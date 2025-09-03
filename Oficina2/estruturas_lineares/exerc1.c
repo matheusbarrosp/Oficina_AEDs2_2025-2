@@ -1,79 +1,123 @@
-#define MAX_EMERGENCY 10
-#define MAX_PERIODIC 20
+#include<stdio.h>
+
+#define MAX_EMERGENCIA 5
+#define MAX_PERIODICA 5
 #define MAX_BACKGROUND 30
 
 typedef struct {
-    int task_id ;
-    int priority ; // 0 -10 (0 = maxima prioridade )
-} Task ;
+    int id ;
+    int prioridade ; // 0 -10 (0 = maxima prioridade )
+} Tarefa ;
 
-Task get_next_task(){
-    //to implement
-}
+typedef struct {
+    Tarefa pilha[MAX_EMERGENCIA] ; // pilha de tarefas
+    int n; // numero de tarefas na lista
+} PilhaEmergencia ;
 
-void promote_to_emergency(){
-    //to implement
-}
+typedef struct {
+    Tarefa fila[MAX_PERIODICA] ; // fila de tarefas
+    int primeiro; // posicao do primeiro
+    int ultimo; // posicao do ultimo 
+} FilaPeriodica ;
 
-void push_emergency(Task t){
-    // to implement
-}
-Task pop_emergency(){
-    // to implement
-}
+typedef struct {
+    Tarefa lista[MAX_BACKGROUND] ; // lista de tarefas
+    int n; // numero de tarefas na lista
+} ListaBackground ;
 
-void enqueue_periodic(Task t){
-    // to implement
-}
-Task dequeue_periodic(){
-    // to implement
-}
-
-void insert_background(Task t){
-    // to implement
-}
-Task remove_background(){
-    // to implement
+Tarefa processarTarefa(PilhaEmergencia* p, FilaPeriodica* f, ListaBackground* l){
+    // TO DO: IMPLEMENTAR
+    // desempilhar uma tarefa da pilha (se houver)
+    // OU desinfileirar uma tarefa da fila (se houver)
+    // OU retirar a tarefa mais prioritária da lista
 }
 
-void criarTarefa(){
-    int id;
-    int prioridade;
-    printf("ID:\n");
-    scanf("%d", &id);
-    printf("Prioridade:\n");
-    scanf("%d", &prioridade);
+void promoverTarefa(PilhaEmergencia* p, ListaBackground* l, int id){
+    // TO DO: IMPLEMENTAR
+    // passar a tarefa de identificador id da lista para a pilha
+}
+
+void empilharEmergencia(PilhaEmergencia* p, Tarefa t){
+    // TO DO: IMPLEMENTAR
+    // empilhar uma tarefa na pilha
+}
+
+Tarefa desempilharEmergencia(PilhaEmergencia* p){
+    // TO DO: IMPLEMENTAR
+    // desempilhar uma tarefa da pilha
+}
+
+void enfileirarPeriodica(FilaPeriodica* f, Tarefa t){
+    // TO DO: IMPLEMENTAR
+    // enfilierar um elemento na fila
+}
+
+Tarefa desenfileirarPeriodica(FilaPeriodica* f){
+    // TO DO: IMPLEMENTAR
+    // desinfileirar uma tarefa da fila
+}
+
+void inserirBackground(ListaBackground* l, Tarefa t){
+    // TO DO: IMPLEMENTAR
+    // inserir uma tarefa na lista
+}
+
+Tarefa removerBackground(ListaBackground* l){
+    // TO DO: IMPLEMENTAR
+    // remover a tarefa mais prioritaria da lista
+}
+
+void imprimirEstruturas(PilhaEmergencia* p, FilaPeriodica* f, ListaBackground* l){
+    // TO DO: IMPLEMENTAR
+    // printar a pilha, lista e fila
+}
+
+
+void criarTarefa(PilhaEmergencia* p, FilaPeriodica* f, ListaBackground* l){
+    Tarefa tarefa;
+    printf("ID: ");
+    scanf("%d", &tarefa.id);
+    printf("Prioridade: ");
+    scanf("%d", &tarefa.prioridade);
     printf("1-Inserir na Pilha\n2-Inserir na Fila\n3-Inserir na lista\n");
     int local;
+    printf("Onde Inserir: ");
     scanf("%d", &local);
-    Task tarefa;
-    tarefa.task_id = id;
-    tarefa.priority = prioridade;
-    if(local == 1) push_emergency(tarefa);
-    else if(local == 2) enqueue_periodic(tarefa);
-    else insert_background(tarefa);
+    if(local == 1) push_emergency(p, tarefa);
+    else if(local == 2) enqueue_periodic(f, tarefa);
+    else insert_background(l, tarefa);
 }
 
-
 int main(){
-    Task pilha[MAX_EMERGENCY];
-    Task fila[MAX_PERIODIC];
-    Task lista[MAX_BACKGROUND];
+    PilhaEmergencia pilha;
+    pilha.n = 0;
+    FilaPeriodica fila;
+    fila.primeiro = 0;
+    fila.ultimo = 0;
+    ListaBackground lista;
+    lista.n = 0;
 
     int opcao;
-    printf("Entre com a opcao:\n");
-    printf("1-Criar\n2-Processar\n3-Promover\n0-Sair\n");
+    printf("########\n1-Criar Tarefa\n2-Processar Tarefa\n3-Promover Tarefa\n0-Sair\n");
+    printf("Entre com a opcao: ");    
     scanf("%d", &opcao);
     while(opcao != 0){
         if(opcao == 1){
-            criarTarefa();
+            criarTarefa(&pilha, &fila, &lista);
         }else if(opcao == 2){
-            get_next_task();
+            Tarefa processada = processarTarefa(&pilha, &fila, &lista);
+            printf("Processei tarefa %d\n", processada.id);
         }else if(opcao == 3){
-            promote_to_emergency();
+            printf("Qual o ID da tarefa a ser promovida?\n");
+            int id;
+            scanf("%d", &id);
+            promoverTarefa(&pilha, &lista, id);
         }
 
-        printf("1-Criar\n2-Processar\n3-Promover\n0-Sair\n");
+        imprimirEstruturas(&pilha, &fila, &lista);
+
+        printf("########\n1-Criar Tarefa\n2-Processar Tarefa\n3-Promover Tarefa\n0-Sair\n");
+        printf("Entre com a opcao: ");    
         scanf("%d", &opcao);
     }
     return 0;
