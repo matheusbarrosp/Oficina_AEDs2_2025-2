@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 // Classe para representar uma cidade
-// Possui um nome, um array e vizinhos e um array de distância para os respectivos vizinhos do outro array
+// Possui um nome, um array de vizinhos e um array de distância para os respectivos vizinhos do outro array
 class Cidade {
     public String nome;
     public String[] vizinhos;
